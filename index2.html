@@ -23,6 +23,13 @@
 </nav>
 
 <header class="hero">
+  <div class="wrap">
+
+    <p style="margin-bottom:20px;font-size:16px;font-weight:600;">
+      Halo, <span id="namaUser"></span> 👋
+    </p>
+
+  </div>
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">Digital art commission</div>
@@ -81,7 +88,7 @@
           <p class="pkg-desc">Fokus ekspresi wajah.</p>
           <div class="pkg-foot">
             <span class="pkg-price">Rp200.000</span>
-            <a href="formpemesanan3.html"><button class="pkg-btn">Pilih paket →</button></a>
+            <a href="formpemesanan3.html" onclick="localStorage.setItem('paket','Wajah'); localStorage.setItem('harga','Rp200.000');"><button class="pkg-btn">Pilih paket →</button></a>
           </div>
         </div>
       </div>
@@ -93,7 +100,7 @@
           <p class="pkg-desc">Pinggang ke atas, dengan shading lembut.</p>
           <div class="pkg-foot">
             <span class="pkg-price">Rp450.000</span>
-            <a href="formpemesanan2.html"><button class="pkg-btn">Pilih paket →</button></a>
+            <a href="formpemesanan2.html" onclick="localStorage.setItem('paket','Half Body Shaded'); localStorage.setItem('harga','Rp450.000');"><button class="pkg-btn">Pilih paket →</button></a>
           </div>
         </div>
       </div>
@@ -105,7 +112,7 @@
           <p class="pkg-desc">Karakter penuh dengan pewarnaan lengkap.</p>
           <div class="pkg-foot">
             <span class="pkg-price">Rp600.000</span>
-            <a href="form-pemesanan.html"><button class="pkg-btn">Pilih paket →</button></a>
+            <a href="form-pemesanan.html" onclick="localStorage.setItem('paket','Full Body Color'); localStorage.setItem('harga','Rp600.000');"><button class="pkg-btn">Pilih paket →</button></a>
           </div>
         </div>
       </div>
@@ -159,6 +166,16 @@
 <footer>
   <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. Art by KANAU All rights Reserved.</div>
 </footer>
+
+<script>
+const nama = localStorage.getItem("nama");
+
+if(nama){
+    document.getElementById("namaUser").textContent = nama;
+}else{
+    window.location.href = "login.html";
+}
+</script>
 
 </body>
 </html>

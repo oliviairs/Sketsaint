@@ -17,6 +17,7 @@
 .order-meta { font-size:12px; color:var(--ink-soft); }
 .badge { font-size:11px; padding:4px 11px; border-radius:20px; font-weight:500; white-space:nowrap; }
 .badge-progress { background:#E8EDE3; color:var(--sage-dark); }
+.badge-new { background:#F4E6DC; color:var(--terracotta-dark); }
 .section-label { font-size:11px; color:var(--ink-soft); font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-bottom:10px; display:block; }
 .info-row {
   display:flex; justify-content:space-between; align-items:flex-start;
@@ -82,32 +83,32 @@
       <div class="detail-header">
         <div>
           <div class="order-id">ORDER #004</div>
-          <div class="order-title">Wajah</div>
-          <div class="order-meta">Pelanggan: Siska · Rp200.000</div>
+          <div class="order-title" id="namaPaket"></div>
+          <div class="order-meta">Pelanggan: <span id="namaPelanggan"></span> · <span id="hargaPaket"></span></div>
         </div>
-        <span class="badge badge-progress">Sedang dikerjakan</span>
+        <span class="badge badge-new" id="statusBadge">Baru</span>
       </div>
 
       <div class="detail-panel">
         <span class="section-label">Detail permintaan pelanggan</span>
         <div class="info-row">
           <span class="info-label">Paket</span>
-          <span class="info-value">Wajah</span>
+          <span class="info-value" id="infoPaket"></span>
         </div>
         <div class="info-row">
           <span class="info-label">Deskripsi</span>
-          <span class="info-value">Karakter perempuan, rambut panjang, gaya anime</span>
+          <span class="info-value" id="infoDeskripsi"></span>
         </div>
         <div class="info-row">
           <span class="info-label">Gambar referensi</span>
-          <span class="info-value">referensi_siska.jpg</span>
+          <span class="info-value" id="infoNamaFile"></span>
         </div>
       </div>
 
       <div class="detail-panel">
         <span class="section-label">Referensi dari pelanggan</span>
-        <div class="referensi-box" style="overflow:hidden;padding:0;"><img src="refere.jpg" alt="referensi pelanggan" style="width:100%;height:100%;object-fit:cover;"></div>
-        <p style="font-size:11px;color:var(--ink-soft);margin:4px 0 0;">referensi_siska.jpg</p>
+        <div class="referensi-box" style="overflow:hidden;padding:0;"><img id="referensiImg" src="refere.jpg" alt="referensi pelanggan" style="width:100%;height:100%;object-fit:cover;"></div>
+        <p style="font-size:11px;color:var(--ink-soft);margin:4px 0 0;" id="referensiCaption">referensi_siska.jpg</p>
       </div>
 
       <div class="detail-panel">
@@ -175,6 +176,26 @@ function sendUpdate(){
 if(document.getElementById("previewFile").files.length==0){alert("Silakan upload preview terlebih dahulu.");return;}
 document.getElementById("successMessage").style.display="block";
 setTimeout(()=>document.getElementById("successMessage").style.display="none",3000);
+}
+
+// Isi data pesanan sesuai yang dipilih pelanggan
+const namaPelanggan = localStorage.getItem("nama") || "Siska";
+const namaPaket = localStorage.getItem("paket") || "Wajah";
+const hargaPaket = localStorage.getItem("harga") || "Rp200.000";
+const deskripsiKarakter = localStorage.getItem("deskripsi") || "Karakter perempuan, rambut panjang, gaya anime";
+const referensiNama = localStorage.getItem("referensiNama") || "referensi_siska.jpg";
+const referensiGambar = localStorage.getItem("referensiGambar");
+
+document.getElementById("namaPelanggan").textContent = namaPelanggan;
+document.getElementById("namaPaket").textContent = namaPaket;
+document.getElementById("hargaPaket").textContent = hargaPaket;
+document.getElementById("infoPaket").textContent = namaPaket;
+document.getElementById("infoDeskripsi").textContent = deskripsiKarakter;
+document.getElementById("infoNamaFile").textContent = referensiNama;
+document.getElementById("referensiCaption").textContent = referensiNama;
+
+if(referensiGambar){
+  document.getElementById("referensiImg").src = referensiGambar;
 }
 </script>
 </body>

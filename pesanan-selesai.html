@@ -60,7 +60,7 @@
             <div>
               <div class="order-id">ORDER #002</div>
               <div class="order-title">Wajah</div>
-              <div class="order-meta">Pelanggan: Siska · Rp200.000</div>
+              <div class="order-meta">Pelanggan: <span id="namaPelanggan"></span> · Rp200.000</div>
             </div>
           </div>
           <span class="badge badge-done">Selesai</span>
@@ -88,6 +88,11 @@
 <footer>
   <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. All rights Reserved.</div>
 </footer>
+<script>
+const nama = localStorage.getItem("nama");
 
+document.getElementById("namaPelanggan").textContent =
+    nama ? nama : "Siska";
+</script>
 </body>
 </html>

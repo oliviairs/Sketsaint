@@ -33,14 +33,14 @@
         <h3>Buat akun baru</h3>
         <p class="login-sub">Daftar untuk mulai memesan ilustrasi</p>
         <label class="field-label">Nama Lengkap</label>
-        <input class="field-input" type="text" placeholder="Nama kamu">
+        <input class="field-input" type="text" id="nama" placeholder="Nama kamu">
         <label class="field-label">Email</label>
-        <input class="field-input" type="email" placeholder="nama@email.com">
+        <input class="field-input" type="email" id="email" placeholder="nama@email.com">
         <label class="field-label">Password</label>
-        <input class="field-input" type="password" placeholder="Min. 8 karakter">
+        <input class="field-input" type="password" id="password" placeholder="Min. 8 karakter">
         <label class="field-label">Konfirmasi Password</label>
-        <input class="field-input" type="password" placeholder="Ulangi password">
-        <a href="index2.html" style="text-decoration:none;"><button class="full-btn">Daftar Sekarang</button></a>
+        <input class="field-input" type="password" id="konfirmasi" placeholder="Ulangi password">
+        <button class="full-btn" onclick="daftar()">Daftar Sekarang</button>
         <p class="switch-text">Sudah punya akun? <a href="login.html" style="color:var(--terracotta-dark);text-decoration:none;font-weight:600;">Masuk</a></p>
       </div>
     </div>
@@ -50,6 +50,35 @@
 <footer>
   <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. Art by KANAU All rights Reserved.</div>
 </footer>
+
+<script>
+function daftar(){
+
+    const nama = document.getElementById("nama").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+    const konfirmasi = document.getElementById("konfirmasi").value;
+
+    if(nama === "" || email === "" || password === "" || konfirmasi === ""){
+        alert("Semua data harus diisi.");
+        return;
+    }
+
+    if(password !== konfirmasi){
+        alert("Konfirmasi password tidak sesuai.");
+        return;
+    }
+
+    localStorage.setItem("nama", nama);
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
+
+    alert("Registrasi berhasil!");
+
+    window.location.href = "index2.html";
+
+}
+</script>
 
 </body>
 </html>

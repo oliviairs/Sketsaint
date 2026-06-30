@@ -191,7 +191,7 @@
       <div>
         <div class="order-id">ORDER #004</div>
         <h2 class="order-title">Full Body Color</h2>
-        <div class="order-meta">Dipesan oleh Siska · Selesai</div>
+        <div class="order-meta">Dipesan oleh <span id="namaUser"></span> · Selesai</div>
       </div>
       <span class="badge-done">Selesai</span>
     </div>
@@ -324,6 +324,14 @@
 
     },3000);
   }
+
+  const nama = localStorage.getItem("nama");
+
+if(nama){
+    document.getElementById("namaUser").textContent = nama;
+}else{
+    window.location.href = "login.html";
+}
 
 </script>
 

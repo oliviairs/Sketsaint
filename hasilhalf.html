@@ -191,7 +191,7 @@
       <div>
         <div class="order-id">ORDER #004</div>
         <h2 class="order-title">Half Body Shaded</h2>
-        <div class="order-meta">Dipesan oleh Siska · Selesai</div>
+        <div class="order-meta">Dipesan oleh <span id="namaUser"></span> · Selesai</div>
       </div>
       <span class="badge-done">Selesai</span>
     </div>
@@ -309,32 +309,14 @@
 
     },3000);
   }
-</script>
 
-</body>
-</html></div>
-</footer>
+  const nama = localStorage.getItem("nama");
 
-<script>
-  function rate(n) {
-    document.querySelectorAll('.star').forEach((s, i) => {
-      s.classList.toggle('active', i < n);
-    });
-  }
-
-  function downloadAll() {
-    const png = document.createElement("a");
-    png.href = "hasil2.jpg";
-    png.download = "hasil2.jpg";
-    png.click();
-
-    setTimeout(function () {
-      const psd = document.createElement("a");
-      psd.href = "hasil2.jpg";
-      psd.download = "hasil2.jpg";
-      psd.click();
-    }, 500);
-  }
+if(nama){
+    document.getElementById("namaUser").textContent = nama;
+}else{
+    window.location.href = "login.html";
+}
 
 </script>
 

@@ -46,16 +46,26 @@
 </footer>
 
 <script>
-  function masuk() {
-    const email = document.getElementById('input-email').value.trim().toLowerCase();
+function masuk() {
 
-    // Kata kunci tersembunyi untuk akses portal artist (tidak ditampilkan di UI)
-    if (email === 'artist') {
-      window.location.href = 'login-artist.html';
-    } else {
-      window.location.href = 'index2.html';
+    const email = document.getElementById("input-email").value.trim().toLowerCase();
+    const password = document.getElementById("input-password").value;
+
+    if (email === "artist") {
+        window.location.href = "login-artist.html";
+        return;
     }
-  }
+
+    const emailTersimpan = localStorage.getItem("email");
+    const passwordTersimpan = localStorage.getItem("password");
+
+    if (email === emailTersimpan && password === passwordTersimpan) {
+        window.location.href = "index2.html";
+    } else {
+        alert("Email atau password salah.");
+    }
+
+}
 </script>
 
 </body>

@@ -86,8 +86,8 @@
         <div class="order-row">
           <div>
             <div class="order-id">ORDER #004</div>
-            <div class="order-title">Wajah</div>
-            <div class="order-meta">Pelanggan: Siska · Rp200.000</div>
+            <div class="order-title" id="namaPaket"></div>
+            <div class="order-meta">Pelanggan: <span id="namaPelanggan"></span> · <span id="hargaPaket"></span></div>
           </div>
           <span class="badge badge-new">Baru</span>
         </div>
@@ -124,6 +124,23 @@
 <footer>
   <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. All rights Reserved.</div>
 </footer>
+<script>
+const nama = localStorage.getItem("nama");
 
+if(nama){
+    document.getElementById("namaPelanggan").textContent = nama;
+}else{
+    document.getElementById("namaPelanggan").textContent = "Siska";
+}
+
+document.getElementById("namaPelanggan").textContent =
+localStorage.getItem("nama") || "Siska";
+
+document.getElementById("namaPaket").textContent =
+localStorage.getItem("paket") || "Wajah";
+
+document.getElementById("hargaPaket").textContent =
+localStorage.getItem("harga") || "Rp200.000";
+</script>
 </body>
 </html>

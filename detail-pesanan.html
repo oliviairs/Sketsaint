@@ -86,9 +86,10 @@
     <div class="device-body">
 
       <div style="display:flex;align-items:center;gap:10px;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--line);">
-        <div style="width:34px;height:34px;border-radius:50%;background:#FBDCEA;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;font-family:'Fraunces',serif;color:var(--terracotta-dark);">S</div>
+        <div id="avatarUser" style="width:34px;height:34px;border-radius:50%;background:#FBDCEA;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;font-family:'Fraunces',serif;color:var(--terracotta-dark);"></div>
         <div>
-          <div style="font-size:14px;font-weight:600;">Halo, Siska</div>
+          <div style="font-size:14px;font-weight:600;">Halo, <span id="namaUser"></span>
+            </div>
           <div style="font-size:12px;color:var(--ink-soft);">2 pesanan aktif</div>
         </div>
       </div>
@@ -183,6 +184,16 @@ function kirimRevisi(){
    document.getElementById("notifRevisi").style.display="none";
  },3000);
 }
+
+const nama = localStorage.getItem("nama");
+
+if(nama){
+    document.getElementById("namaUser").textContent = nama;
+    document.getElementById("avatarUser").textContent = nama.charAt(0).toUpperCase();
+}else{
+    window.location.href = "login.html";
+}
+
 </script>
 
 </body>
