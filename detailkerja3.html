@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Pengerjaan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style2.css">
+<style>
+.detail-header {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid var(--line);
+}
+.order-id { font-family:'Fraunces',serif; font-size:11px; color:var(--terracotta-dark); margin-bottom:3px; }
+.order-title { font-size:15px; font-weight:600; margin-bottom:2px; }
+.order-meta { font-size:12px; color:var(--ink-soft); }
+.badge { font-size:11px; padding:4px 11px; border-radius:20px; font-weight:500; white-space:nowrap; }
+.badge-progress { background:#E8EDE3; color:var(--sage-dark); }
+.section-label { font-size:11px; color:var(--ink-soft); font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-bottom:10px; display:block; }
+.info-row {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding:9px 0; border-bottom:1px solid var(--line); font-size:13px;
+}
+.info-row:last-of-type { border-bottom:none; }
+.info-label { color:var(--ink-soft); font-size:12px; }
+.info-value { font-weight:500; text-align:right; max-width:60%; }
+.referensi-box {
+  background:var(--line); border-radius:3px; aspect-ratio:4/3;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:var(--ink-soft); margin-bottom:4px;
+}
+.upload-box {
+  border:1.5px dashed var(--line-strong); border-radius:3px; padding:16px;
+  text-align:center; font-size:12px; color:var(--ink-soft); cursor:pointer;
+  margin-bottom:8px; transition:border-color .15s;
+}
+.upload-box:hover { border-color:var(--terracotta); }
+.field-label { font-size:12px; color:var(--ink-soft); display:block; margin-bottom:5px; }
+.field-textarea {
+  width:100%; min-height:60px; padding:10px 12px; border:1px solid var(--line-strong);
+  border-radius:2px; font-size:13px; font-family:'Inter',sans-serif; background:var(--bg);
+  color:var(--ink); margin-bottom:12px; resize:vertical; box-sizing:border-box;
+}
+.field-select {
+  width:100%; padding:10px 12px; border:1px solid var(--line-strong);
+  border-radius:2px; font-size:13px; font-family:'Inter',sans-serif; background:var(--bg);
+  color:var(--ink); margin-bottom:14px;
+}
+.full-btn {
+  width:100%; background:var(--terracotta); color:#fff; border:none;
+  padding:11px; font-size:13px; border-radius:2px; cursor:pointer;
+  font-family:'Inter',sans-serif; font-weight:500; margin-bottom:8px;
+}
+.revisi-item { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); }
+.revisi-item:last-of-type { border-bottom:none; }
+.revisi-dot { width:6px; height:6px; border-radius:50%; background:var(--sage); margin-top:5px; flex-shrink:0; }
+.revisi-text { font-size:13px; }
+.revisi-status { font-size:11px; color:var(--ink-soft); margin-top:2px; }
+.detail-panel { background:var(--card); border:1px solid var(--line); border-radius:4px; padding:16px; margin-bottom:14px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="dashboard-artist.html" style="text-decoration:none;"><img src="https://placehold.co/160x32/1a1a1a/ffffff?text=SKETSAINT+Artist&font=playfair-display" alt="Sketsaint Artist" style="height:32px;"></a>
+    <div class="navlinks">
+      <a href="dashboard-artist.html">Dashboard</a>
+      <a href="detail-pengerjaan.html">Pesanan</a>
+    </div>
+    <a class="navcta" href="login-artist.html">Keluar</a>
+  </div>
+</nav>
+
+<div class="device-page" style="max-width:500px;">
+  <div class="screen-label">Detail pengerjaan pesanan</div>
+  <div class="device">
+    <div class="device-bar"><span></span><span></span><span></span></div>
+    <div class="device-body">
+
+      <div class="detail-header">
+        <div>
+          <div class="order-id">ORDER #001</div>
+          <div class="order-title">Full Body Color</div>
+          <div class="order-meta">Pelanggan: Rafa · Rp600.000</div>
+        </div>
+        <span class="badge badge-progress">Sedang dikerjakan</span>
+      </div>
+
+      <div class="detail-panel">
+        <span class="section-label">Detail permintaan pelanggan</span>
+        <div class="info-row">
+          <span class="info-label">Paket</span>
+          <span class="info-value">Full Body Color</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Deskripsi</span>
+          <span class="info-value">Karakter perempuan, rambut panjang, pose jongkok swag pakai hiasan kepala</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Gambar referensi</span>
+          <span class="info-value">referensi_rf.jpg</span>
+        </div>
+      </div>
+
+      <div class="detail-panel">
+        <span class="section-label">Referensi dari pelanggan</span>
+        <div class="referensi-box" style="overflow:hidden;padding:0;"><img src="refere3.jpg" alt="referensi pelanggan" style="width:100%;height:100%;object-fit:cover;"></div>
+        <p style="font-size:11px;color:var(--ink-soft);margin:4px 0 0;">referensi_rf.jpg</p>
+      </div>
+
+      <div class="detail-panel">
+        <span class="section-label">Update status pengerjaan</span>
+        <label class="field-label">Status saat ini</label>
+        <select class="field-select">
+          <option>Sedang dikerjakan</option>
+          <option>Preview dikirim</option>
+          <option>Revisi</option>
+          <option>Selesai</option>
+        </select>
+        <label class="field-label">Catatan untuk pelanggan (opsional)</label>
+        <textarea class="field-textarea" placeholder="Isi catatan..."></textarea>
+        <span class="section-label">Upload preview / hasil akhir</span>
+        <div class="upload-box" id="uploadBox" onclick="document.getElementById('previewFile').click();">
+          <img id="previewImg" style="display:none;width:100%;height:220px;object-fit:cover;border-radius:3px;">
+          <div id="uploadText">Klik untuk upload file preview</div>
+        </div>
+        <input type="file" id="previewFile" accept="image/*" style="display:none;" onchange="previewUpload(this)">
+        <div id="fileName" style="text-align:center;font-size:12px;color:var(--ink-soft);margin-bottom:12px;"></div>
+        <button class="full-btn" onclick="sendUpdate()">Simpan &amp; Kirim Update</button>
+        <p id="successMessage" style="display:none;text-align:center;color:var(--sage-dark);font-size:12px;font-weight:500;margin-top:8px;">✓ Update berhasil dikirim.</p>
+      </div>
+
+      <div class="detail-panel">
+        <span class="section-label">Permintaan revisi dari pelanggan</span>
+        <div class="revisi-item">
+          <div class="revisi-dot"></div>
+          <div>
+            <div class="revisi-text">Perbesar mata sedikit</div>
+            <div class="revisi-status">Dikirim 1 hari lalu · Status: Selesai</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--ink-soft);">Belum ada permintaan revisi baru.</div>
+      </div>
+
+      <a href="dashboard-artist.html" style="text-decoration:none;">
+        <button style="width:100%;background:transparent;color:var(--ink);border:1px solid var(--line-strong);padding:10px;font-size:13px;border-radius:2px;cursor:pointer;font-family:'Inter',sans-serif;">
+          ← Kembali ke dashboard
+        </button>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. Art by KANAU All rights Reserved.</div>
+</footer>
+
+<script>
+function previewUpload(input){
+if(input.files.length>0){
+const file=input.files[0];
+const r=new FileReader();
+r.onload=function(e){
+document.getElementById("previewImg").src=e.target.result;
+document.getElementById("previewImg").style.display="block";
+document.getElementById("uploadText").style.display="none";
+document.getElementById("fileName").textContent=file.name;
+};
+r.readAsDataURL(file);
+}}
+function sendUpdate(){
+if(document.getElementById("previewFile").files.length==0){alert("Silakan upload preview terlebih dahulu.");return;}
+document.getElementById("successMessage").style.display="block";
+setTimeout(()=>document.getElementById("successMessage").style.display="none",3000);
+}
+</script>
+
+</body>
+</html>

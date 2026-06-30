@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Pesanan Selesai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style2.css">
+<style>
+.detail-header {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid var(--line);
+}
+.order-id { font-family:'Fraunces',serif; font-size:11px; color:var(--terracotta-dark); margin-bottom:3px; }
+.order-title { font-size:15px; font-weight:600; margin-bottom:2px; }
+.order-meta { font-size:12px; color:var(--ink-soft); }
+.badge { font-size:11px; padding:4px 11px; border-radius:20px; font-weight:500; white-space:nowrap; }
+.badge-done { background:#E3E8ED; color:#3D5A73; }
+.section-label { font-size:11px; color:var(--ink-soft); font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-bottom:10px; display:block; }
+.info-row {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding:9px 0; border-bottom:1px solid var(--line); font-size:13px;
+}
+.info-row:last-of-type { border-bottom:none; }
+.info-label { color:var(--ink-soft); font-size:12px; }
+.info-value { font-weight:500; text-align:right; max-width:60%; }
+.referensi-box {
+  background:var(--line); border-radius:3px; aspect-ratio:4/3; overflow:hidden; padding:0;
+  margin-bottom:4px;
+}
+.detail-panel { background:var(--card); border:1px solid var(--line); border-radius:4px; padding:16px; margin-bottom:14px; }
+.hasil-grid { display:grid; grid-template-columns:1fr; gap:10px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="dashboard-artist.html" style="text-decoration:none;"><img src="https://placehold.co/160x32/1a1a1a/ffffff?text=SKETSAINT+Artist&font=playfair-display" alt="Sketsaint Artist" style="height:32px;"></a>
+    <div class="navlinks">
+      <a href="dashboard-artist.html">Dashboard</a>
+      <a href="pesanan-selesai.html">Pesanan</a>
+    </div>
+    <a class="navcta" href="login-artist.html">Keluar</a>
+  </div>
+</nav>
+
+<div class="device-page" style="max-width:500px;">
+  <div class="screen-label">Detail pesanan selesai</div>
+  <div class="device">
+    <div class="device-bar"><span></span><span></span><span></span></div>
+    <div class="device-body">
+
+      <div class="detail-header">
+        <div>
+          <div class="order-id">ORDER #002</div>
+          <div class="order-title">Wajah</div>
+          <div class="order-meta">Pelanggan: Siska · Rp200.000</div>
+        </div>
+        <span class="badge badge-done">Selesai</span>
+      </div>
+
+      <div class="detail-panel">
+        <span class="section-label">Detail permintaan pelanggan</span>
+        <div class="info-row">
+          <span class="info-label">Paket</span>
+          <span class="info-value">Wajah</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Deskripsi</span>
+          <span class="info-value">Karakter perempuan, rambut panjang, gaya anime</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Tanggal selesai</span>
+          <span class="info-value">24 Juni 2026</span>
+        </div>
+      </div>
+
+      <div class="detail-panel">
+        <span class="section-label">Referensi dari pelanggan</span>
+        <div class="referensi-box"><img src="refere5.jpg" alt="referensi pelanggan" style="width:100%;height:100%;object-fit:cover;"></div>
+        <p style="font-size:11px;color:var(--ink-soft);margin:4px 0 0;">referensi_siska.jpg</p>
+      </div>
+
+      <div class="detail-panel">
+        <span class="section-label">Hasil gambar akhir</span>
+        <div class="hasil-grid">
+          <div class="referensi-box" style="margin-bottom:0;"><img src="hasilll2.jpg" alt="hasil akhir" style="width:100%;height:100%;object-fit:cover;"></div>
+        </div>
+        <p style="font-size:11px;color:var(--ink-soft);margin:8px 0 0;">hasil_akhir_siska.jpg · Dikirim ke pelanggan 24 Juni 2026</p>
+      </div>
+
+      <a href="pesanan-selesai.html" style="text-decoration:none;">
+        <button style="width:100%;background:transparent;color:var(--ink);border:1px solid var(--line-strong);padding:10px;font-size:13px;border-radius:2px;cursor:pointer;font-family:'Inter',sans-serif;">
+          ← Kembali ke daftar pesanan selesai
+        </button>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. All rights Reserved.</div>
+</footer>
+
+</body>
+</html>

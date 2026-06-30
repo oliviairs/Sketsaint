@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status Pesanan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.pesanan-list { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+.pesanan-card {
+  background:var(--card); border:1px solid var(--line); border-radius:4px;
+  padding:14px 16px; display:flex; justify-content:space-between; align-items:center;
+  cursor:pointer; transition:border-color .15s;
+}
+.pesanan-card:hover { border-color:var(--line-strong); }
+.pesanan-card.active { border-color:var(--terracotta); }
+.pesanan-card-left .order-id { font-family:'Fraunces',serif; font-size:11px; color:var(--terracotta-dark); margin-bottom:2px; }
+.pesanan-card-left .order-title { font-size:13px; font-weight:500; }
+.pesanan-card-left .order-meta { font-size:12px; color:var(--ink-soft); margin-top:2px; }
+.badge { font-size:11px; padding:4px 11px; border-radius:20px; font-weight:500; white-space:nowrap; }
+.badge-wait { background:#F4E6DC; color:var(--terracotta-dark); }
+.badge-progress { background:#E8EDE3; color:var(--sage-dark); }
+.badge-done { background:#E3E8ED; color:#3D5A73; }
+.badge-verify { background:#FAEEDA; color:#7A5A10; }
+.detail-panel {
+  background:var(--card); border:1px solid var(--line); border-radius:4px;
+  padding:18px; margin-bottom:16px;
+}
+.detail-section-label { font-size:11px; color:var(--ink-soft); font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-bottom:10px; display:block; }
+.progress-bar-wrap { background:var(--line); border-radius:20px; height:5px; margin-bottom:14px; }
+.progress-bar { background:var(--terracotta); border-radius:20px; height:5px; width:40%; }
+.timeline { display:flex; flex-direction:column; gap:0; }
+.tl-item { display:flex; gap:12px; padding-bottom:14px; position:relative; }
+.tl-item:last-child { padding-bottom:0; }
+.tl-dot-wrap { display:flex; flex-direction:column; align-items:center; }
+.tl-dot { width:10px; height:10px; border-radius:50%; background:var(--line-strong); flex-shrink:0; margin-top:3px; }
+.tl-dot.done { background:var(--sage); }
+.tl-dot.active { background:var(--terracotta); }
+.tl-line { width:1px; background:var(--line); flex:1; margin-top:4px; }
+.tl-item:last-child .tl-line { display:none; }
+.tl-text { font-size:13px; }
+.tl-subtext { font-size:11px; color:var(--ink-soft); margin-top:2px; }
+.preview-box {
+  background:var(--line); border-radius:3px; aspect-ratio:4/3;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:var(--ink-soft); margin-bottom:12px;
+}
+.revisi-item { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); }
+.revisi-item:last-of-type { border-bottom:none; }
+.revisi-dot { width:6px; height:6px; border-radius:50%; background:var(--sage); margin-top:5px; flex-shrink:0; }
+.revisi-text { font-size:13px; }
+.revisi-status { font-size:11px; color:var(--ink-soft); margin-top:2px; }
+.field-label { font-size:12px; color:var(--ink-soft); display:block; margin-bottom:5px; }
+.field-textarea {
+  width:100%; min-height:65px; padding:10px 12px; border:1px solid var(--line-strong);
+  border-radius:2px; font-size:13px; font-family:'Inter',sans-serif; background:var(--bg);
+  color:var(--ink); margin-bottom:12px; resize:vertical; box-sizing:border-box;
+}
+.full-btn {
+  width:100%; background:var(--terracotta); color:#fff; border:none;
+  padding:11px; font-size:13px; border-radius:2px; cursor:pointer;
+  font-family:'Inter',sans-serif; font-weight:500; margin-bottom:8px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" style="text-decoration:none;"><img src="https://placehold.co/120x32/1a1a1a/ffffff?text=SKETSAINT&font=playfair-display" alt="Sketsaint" style="height:32px;"></a>
+    <div class="navlinks">
+      <a href="index2.html#galeri">Galeri</a>
+      <a href="index2.html#katalog">Katalog</a>
+      <a href="index2.html#alur">Alur</a>
+    </div>
+    <a class="navcta" href="login.html">Keluar</a>
+  </div>
+</nav>
+
+<div class="device-page" style="max-width:500px;">
+  <div class="screen-label">Pesanan saya</div>
+  <div class="device">
+    <div class="device-bar"><span></span><span></span><span></span></div>
+    <div class="device-body">
+
+      <div style="display:flex;align-items:center;gap:10px;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--line);">
+        <div style="width:34px;height:34px;border-radius:50%;background:#FBDCEA;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;font-family:'Fraunces',serif;color:var(--terracotta-dark);">S</div>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Halo, Siska</div>
+          <div style="font-size:12px;color:var(--ink-soft);">2 pesanan aktif</div>
+        </div>
+      </div>
+
+      <span class="detail-section-label">Pesanan saya</span>
+      <div class="pesanan-list">
+        <div class="pesanan-card active">
+          <div class="pesanan-card-left">
+            <div class="order-id">ORDER #004</div>
+            <div class="order-title">Wajah</div>
+            <div class="order-meta">Rp200.000 · Hari ini</div>
+          </div>
+          <span class="badge badge-progress">Diproses</span>
+        </div>
+        <div class="pesanan-card">
+          <div class="pesanan-card-left">
+            <div class="order-id">ORDER #002</div>
+            <div class="order-title">Full body color</div>
+            <div class="order-meta">Rp600.000 · 10 hari lalu</div>
+          </div>
+          <span class="badge badge-done">Selesai</span>
+        </div>
+      </div>
+
+      <div class="detail-panel">
+        <span class="detail-section-label">Detail — Order #004</span>
+        <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-line"></div></div>
+            <div><div class="tl-text">Pesanan masuk</div><div class="tl-subtext">Pembayaran diverifikasi</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-line"></div></div>
+            <div><div class="tl-text">Artist mulai mengerjakan</div><div class="tl-subtext">Sketsa awal sedang dibuat</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap"><div class="tl-dot active"></div><div class="tl-line"></div></div>
+            <div><div class="tl-text">Preview dikirim</div><div class="tl-subtext">Menunggu persetujuanmu</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div><div class="tl-text">Revisi (jika ada)</div><div class="tl-subtext">—</div></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+            <div><div class="tl-text">Hasil akhir dikirim</div><div class="tl-subtext">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-panel">
+        <span class="detail-section-label">Preview dari artist</span>
+        <div class="preview-box">Preview sketsa (menunggu artist upload)</div>
+        <span class="detail-section-label">Riwayat revisi</span>
+        <div class="revisi-item">
+          <div class="revisi-dot"></div>
+          <div>
+            <div class="revisi-text">Perbesar mata sedikit</div>
+            <div class="revisi-status">Status: Selesai</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <label class="field-label">Minta revisi baru (opsional)</label>
+          <textarea class="field-textarea" placeholder="Jelaskan bagian yang ingin direvisi..."></textarea>
+          <button class="full-btn" onclick="kirimRevisi()">Kirim permintaan revisi</button>
+<p id="notifRevisi" style="display:none;text-align:center;color:var(--sage-dark);font-size:12px;font-weight:500;margin-top:8px;">
+✓ Permintaan revisi berhasil dikirim.
+</p>
+          <a href="hasil.html" style="text-decoration:none;">
+            <button style="width:100%;background:transparent;color:var(--ink);border:1px solid var(--line-strong);padding:10px;font-size:13px;border-radius:2px;cursor:pointer;font-family:'Inter',sans-serif;">
+            Setujui & lanjut ke hasil akhir
+            </button>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. Art by KANAU All rights Reserved.</div>
+</footer>
+
+<script>
+function kirimRevisi(){
+ document.getElementById("notifRevisi").style.display="block";
+ document.querySelector(".field-textarea").value="";
+ setTimeout(function(){
+   document.getElementById("notifRevisi").style.display="none";
+ },3000);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasil Akhir Pesanan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#e5efff;
+    --ink:#2E2D45;
+    --ink-soft:#6B6F87;
+    --terracotta:#CC7DA0;
+    --terracotta-dark:#A8567E;
+    --sage:#6F9BD1;
+    --sage-dark:#3F6090;
+    --card:#FFFFFF;
+    --line:#E4DCD0;
+    --line-strong:#D2C6B5;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;margin:0;}
+  .wrap{max-width:680px;margin:0 auto;padding:0 28px;}
+
+  nav{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:50;}
+  .nav-inner{max-width:680px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Fraunces',serif;font-size:20px;font-weight:600;}
+  .logo span{color:var(--terracotta);}
+  .navcta{background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:2px;font-size:13px;text-decoration:none;}
+
+  .page{padding:40px 0 64px;}
+
+  /* order header */
+  .order-header{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    padding-bottom:16px;margin-bottom:24px;border-bottom:1px solid var(--line);
+  }
+  .order-id{font-family:'Fraunces',serif;font-size:11px;color:var(--terracotta-dark);margin-bottom:4px;letter-spacing:.5px;}
+  .order-title{font-size:20px;margin-bottom:4px;}
+  .order-meta{font-size:13px;color:var(--ink-soft);}
+  .badge-done{background:#E3E8ED;color:#3D5A73;font-size:11px;padding:5px 13px;border-radius:20px;font-weight:500;white-space:nowrap;}
+
+  /* artwork display */
+  .artwork-wrap{
+    background:var(--card);border:1px solid var(--line);border-radius:6px;
+    overflow:hidden;margin-bottom:20px;position:relative;
+  }
+  .artwork-img{
+    width:100%;display:block;
+    /* placeholder gradient biar keliatan kayak ada gambar beneran */
+    background: linear-gradient(135deg,
+      #F4E6DC 0%, #FBDCEA 25%, #E1E6FA 50%, #E8EDE3 75%, #F4E6DC 100%);
+    min-height:480px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  /* decorative shapes biar ga kosongan */
+  .artwork-img::before{
+    content:'';position:absolute;
+    width:220px;height:220px;border-radius:50%;
+    background:rgba(201,116,79,0.12);
+    top:60px;left:50%;transform:translateX(-50%);
+  }
+  .artwork-img::after{
+    content:'';position:absolute;
+    width:140px;height:140px;border-radius:50%;
+    background:rgba(138,154,126,0.15);
+    bottom:80px;right:80px;
+  }
+  .artwork-placeholder{
+    position:relative;z-index:1;text-align:center;
+    padding:20px;
+  }
+  .artwork-placeholder-icon{
+    width:64px;height:64px;border-radius:50%;
+    border:2px solid rgba(43,36,32,0.15);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 12px;font-size:24px;
+    background:rgba(255,255,255,0.5);
+  }
+  .artwork-placeholder p{font-size:13px;color:var(--ink-soft);margin:0;}
+  .artwork-placeholder b{font-family:'Fraunces',serif;font-size:15px;display:block;margin-bottom:4px;color:var(--ink);}
+
+  /* watermark notice */
+  .watermark-notice{
+    background:rgba(43,36,32,0.04);
+    border-top:1px solid var(--line);
+    padding:10px 16px;
+    font-size:11px;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px;
+  }
+
+  /* info panel */
+  .info-panel{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:16px 18px;margin-bottom:16px;
+  }
+  .panel-label{font-size:11px;color:var(--ink-soft);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;display:block;}
+  .info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .info-row:last-child{border-bottom:none;}
+  .info-label{color:var(--ink-soft);font-size:12px;}
+  .info-value{font-weight:500;}
+
+  /* download section */
+  .download-panel{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:16px 18px;margin-bottom:16px;
+  }
+  .file-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 12px;background:var(--bg);border:1px solid var(--line);
+    border-radius:3px;margin-bottom:8px;
+  }
+  .file-row:last-of-type{margin-bottom:0;}
+  .file-info{display:flex;align-items:center;gap:10px;}
+  .file-icon{
+    width:34px;height:34px;border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:600;font-family:'Fraunces',serif;
+    flex-shrink:0;
+  }
+  .file-icon.png{background:#FBDCEA;color:var(--terracotta-dark);}
+  .file-icon.psd{background:#E1E6FA;color:#4A5A9A;}
+  .file-name{font-size:13px;font-weight:500;}
+  .file-size{font-size:11px;color:var(--ink-soft);margin-top:1px;}
+  .dl-btn{
+    background:var(--ink);color:var(--bg);border:none;
+    padding:7px 14px;font-size:12px;border-radius:2px;
+    cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;
+    white-space:nowrap;flex-shrink:0;
+  }
+  .dl-btn:hover{background:var(--terracotta);}
+
+  .dl-all{
+    width:100%;background:var(--terracotta);color:#fff;border:none;
+    padding:12px;font-size:13px;border-radius:2px;cursor:pointer;
+    font-family:'Inter',sans-serif;font-weight:500;margin-top:14px;
+  }
+  .dl-all:hover{background:var(--terracotta-dark);}
+
+  /* done message */
+  .done-box{
+    background:#E8EDE3;border:1px solid #C8D8BC;border-radius:4px;
+    padding:14px 16px;margin-bottom:16px;
+    display:flex;align-items:flex-start;gap:10px;
+  }
+  .done-dot{width:8px;height:8px;border-radius:50%;background:var(--sage);margin-top:5px;flex-shrink:0;}
+  .done-text{font-size:13px;color:var(--sage-dark);}
+
+  /* feedback */
+  .feedback-panel{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:16px 18px;
+  }
+  .stars{display:flex;gap:6px;margin-bottom:12px;}
+  .star{
+    font-size:22px;cursor:pointer;color:var(--line-strong);
+    transition:color .1s;user-select:none;
+  }
+  .star:hover,.star.active{color:#C99A3F;}
+  .field-textarea{
+    width:100%;min-height:60px;padding:10px 12px;border:1px solid var(--line-strong);
+    border-radius:2px;font-size:13px;font-family:'Inter',sans-serif;background:var(--bg);
+    color:var(--ink);margin-bottom:12px;resize:vertical;
+  }
+  .send-btn{
+    background:var(--ink);color:var(--bg);border:none;
+    padding:10px 20px;font-size:13px;border-radius:2px;
+    cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;
+  }
+
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;font-size:12px;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" style="text-decoration:none;"><img src="https://placehold.co/120x32/1a1a1a/ffffff?text=SKETSAINT&font=playfair-display" alt="Sketsaint" style="height:32px;"></a>
+    <a class="navcta" href="detail2.html">← Pesanan saya</a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="wrap">
+
+    <!-- ORDER HEADER -->
+    <div class="order-header">
+      <div>
+        <div class="order-id">ORDER #004</div>
+        <h2 class="order-title">Half Body Shaded</h2>
+        <div class="order-meta">Dipesan oleh Siska · Selesai</div>
+      </div>
+      <span class="badge-done">Selesai</span>
+    </div>
+
+    <!-- ARTWORK -->
+    <div class="artwork-wrap">
+      <img src="hasil2.jpg" alt="Hasil ilustrasi pesanan" style="width:100%;display:block;">
+      <div class="watermark-notice">
+        <span>🔒</span>
+        <span>Ini adalah preview hasil akhir. File resolusi penuh tersedia untuk diunduh di bawah.</span>
+      </div>
+    </div>
+
+    <!-- DONE MESSAGE -->
+    <div class="done-box">
+      <div class="done-dot"></div>
+      <div class="done-text">Pesananmu sudah selesai dikerjakan! Unduh file hasil akhir di bawah dalam format PNG resolusi tinggi.</div>
+    </div>
+
+    <!-- INFO PESANAN -->
+    <div class="info-panel">
+      <span class="panel-label">Detail pesanan</span>
+      <div class="info-row">
+        <span class="info-label">Paket</span>
+        <span class="info-value">Half Body Shaded</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Total dibayar</span>
+        <span class="info-value">Rp450.000</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Jumlah revisi</span>
+        <span class="info-value">0 kali</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Tanggal selesai</span>
+        <span class="info-value" id="tanggal-selesai"></span>
+      </div>
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div class="download-panel">
+      <span class="panel-label">Unduh file hasil akhir</span>
+      <div class="file-row">
+        <div class="file-info">
+          <div class="file-icon png">PNG</div>
+          <div>
+            <div class="file-name">hasil-order-001.png</div>
+            <div class="file-size">4.2 MB · 3000 × 3000 px</div>
+          </div>
+        </div>
+        <a href="hasil2.jpg" download class="dl-btn" style="text-decoration:none;">Unduh</a>
+      </div>
+      <div class="file-row">
+        <div class="file-info">
+          <div class="file-icon psd">PSD</div>
+          <div>
+            <div class="file-name">hasil-order-001.psd</div>
+            <div class="file-size">18.7 MB · File layered</div>
+          </div>
+        </div>
+        <a href="hasil2.jpg" download class="dl-btn" style="text-decoration:none;">Unduh</a>
+      </div>
+      <button class="dl-all" onclick="downloadAll()">⬇ Unduh semua file</button>
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="feedback-panel">
+      <span class="panel-label">Beri penilaian</span>
+      <div class="stars">
+        <span class="star" onclick="rate(1)">★</span>
+        <span class="star" onclick="rate(2)">★</span>
+        <span class="star" onclick="rate(3)">★</span>
+        <span class="star" onclick="rate(4)">★</span>
+        <span class="star" onclick="rate(5)">★</span>
+      </div>
+      <textarea id="feedback" class="field-textarea" placeholder="Tulis kesanmu tentang hasil ilustrasi ini (opsional)..."></textarea>
+      <button class="send-btn" onclick="sendFeedback()">Kirim penilaian</button>
+      <p id="feedback-success" style="display:none; margin-top:12px; font-size:13px; color:var(--sage-dark); font-weight:500;">✓ Penilaian berhasil dikirim. Terima kasih!</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. Art by KANAU All rights Reserved.</div>
+</footer>
+
+<script>
+  const selesai = new Date();
+  selesai.setDate(selesai.getDate() + 14);
+  document.getElementById('tanggal-selesai').textContent =
+    selesai.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  function rate(n) {
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.classList.toggle('active', i < n);
+    });
+  }
+
+  function sendFeedback(){
+
+    document.getElementById("feedback").value="";
+
+    document.querySelectorAll(".star").forEach(star=>{
+        star.classList.remove("active");
+    });
+
+    const success=document.getElementById("feedback-success");
+
+    success.style.display="block";
+
+    setTimeout(function(){
+
+        success.style.display="none";
+
+    },3000);
+  }
+</script>
+
+</body>
+</html></div>
+</footer>
+
+<script>
+  function rate(n) {
+    document.querySelectorAll('.star').forEach((s, i) => {
+      s.classList.toggle('active', i < n);
+    });
+  }
+
+  function downloadAll() {
+    const png = document.createElement("a");
+    png.href = "hasil2.jpg";
+    png.download = "hasil2.jpg";
+    png.click();
+
+    setTimeout(function () {
+      const psd = document.createElement("a");
+      psd.href = "hasil2.jpg";
+      psd.download = "hasil2.jpg";
+      psd.click();
+    }, 500);
+  }
+
+</script>
+
+</body>
+</html>

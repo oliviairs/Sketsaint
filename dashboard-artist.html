@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style2.css">
+<style>
+.stat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+.stat-card {
+  background:var(--card); border:1px solid var(--line); border-radius:4px;
+  padding:14px 12px; text-align:center;
+}
+.stat-num { font-family:'Fraunces',serif; font-size:22px; font-weight:500; margin-bottom:2px; }
+.stat-label { font-size:11px; color:var(--ink-soft); }
+.stat-num.terracotta { color:var(--terracotta-dark); }
+.stat-num.sage { color:var(--sage-dark); }
+.order-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:13px 0; border-bottom:1px solid var(--line); cursor:pointer;
+}
+.order-row:last-of-type { border-bottom:none; }
+.order-row:hover .order-title { color:var(--terracotta-dark); }
+.order-id { font-family:'Fraunces',serif; font-size:11px; color:var(--terracotta-dark); margin-bottom:2px; }
+.order-title { font-size:13px; font-weight:500; }
+.order-meta { font-size:12px; color:var(--ink-soft); margin-top:2px; }
+.badge { font-size:11px; padding:4px 11px; border-radius:20px; font-weight:500; white-space:nowrap; }
+.badge-wait { background:#FAEEDA; color:#7A5A10; }
+.badge-progress { background:#E8EDE3; color:var(--sage-dark); }
+.badge-done { background:#E3E8ED; color:#3D5A73; }
+.badge-new { background:#F4E6DC; color:var(--terracotta-dark); }
+.section-divider { font-size:11px; color:var(--ink-soft); font-weight:600; letter-spacing:.5px; text-transform:uppercase; padding:12px 0 8px; border-bottom:1px solid var(--line); margin-bottom:2px; }
+.avatar { width:38px; height:38px; border-radius:50%; background:var(--sage); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:600; font-family:'Fraunces',serif; }
+.full-btn { width:100%; background:var(--terracotta); color:#fff; border:none; padding:11px; font-size:13px; border-radius:2px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:500; margin-top:14px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <img src="https://placehold.co/160x32/1a1a1a/ffffff?text=SKETSAINT+Artist&font=playfair-display" alt="Sketsaint Artist" style="height:32px;">
+    <div class="navlinks">
+      <a href="dashboard-artist.html">Dashboard</a>
+      <a href="pesanan-selesai.html">Pesanan</a>
+    </div>
+    <a class="navcta" href="login-artist.html">Keluar</a>
+  </div>
+</nav>
+
+<div class="device-page" style="max-width:500px;">
+  <div class="screen-label">Dashboard artist</div>
+  <div class="device">
+    <div class="device-bar"><span></span><span></span><span></span></div>
+    <div class="device-body">
+
+      <div style="display:flex;align-items:center;gap:10px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--line);">
+        <div class="avatar">KC</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:600;">Halo, Kaize</div>
+          <div style="font-size:12px;color:var(--ink-soft);">Artist</div>
+        </div>
+        <div style="font-size:11px;color:var(--sage-dark);background:#E8EDE3;padding:4px 10px;border-radius:20px;">Online</div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num terracotta">3</div>
+          <div class="stat-label">Pesanan aktif</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Menunggu mulai</div>
+        </div>
+        <a href="pesanan-selesai.html" style="text-decoration:none;color:inherit;">
+        <div class="stat-card">
+          <div class="stat-num sage">2</div>
+          <div class="stat-label">Total selesai</div>
+        </div>
+        </a>
+      </div>
+
+      <div class="section-divider">Pesanan baru masuk</div>
+      <a href="detail-pengerjaan.html" style="text-decoration:none;color:inherit;">
+        <div class="order-row">
+          <div>
+            <div class="order-id">ORDER #004</div>
+            <div class="order-title">Wajah</div>
+            <div class="order-meta">Pelanggan: Siska · Rp200.000</div>
+          </div>
+          <span class="badge badge-new">Baru</span>
+        </div>
+      </a>
+
+      <div class="section-divider" style="margin-top:6px;">Sedang dikerjakan</div>
+      <a href="detailkerja3.html" style="text-decoration:none;color:inherit;">
+        <div class="order-row">
+          <div>
+            <div class="order-id">ORDER #001</div>
+            <div class="order-title">Full Body Color</div>
+            <div class="order-meta">Pelanggan: Rafa · Rp600.000</div>
+          </div>
+          <span class="badge badge-progress">Sketsa</span>
+        </div>
+      </a>
+      <a href="detailkerja2.html" style="text-decoration:none;color:inherit;">
+      <div class="order-row">
+        <div>
+          <div class="order-id">ORDER #003</div>
+          <div class="order-title">Half Body Shaded</div>
+          <div class="order-meta">Pelanggan: Bintang · Rp450.000</div>
+        </div>
+        <span class="badge badge-progress">Coloring</span>
+      </div>
+      </a>
+
+      <a href="pesanan-selesai.html" style="text-decoration:none;"><button class="full-btn">Lihat pesanan selesai →</button></a>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. All rights Reserved.</div>
+</footer>
+
+</body>
+</html>

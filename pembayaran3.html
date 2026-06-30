@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembayaran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ===== STEP INDICATOR ===== */
+  .steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+  .step-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+    border: 1.5px solid var(--line-strong);
+    background: var(--bg);
+    color: var(--ink-soft);
+  }
+  .step.done .step-circle {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: #fff;
+  }
+  .step.active .step-circle {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    color: #fff;
+  }
+  .step.active { color: var(--ink); }
+  .step-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line-strong);
+    margin: 0 8px;
+    min-width: 16px;
+  }
+
+  /* ===== RINGKASAN PESANAN ===== */
+  .order-summary {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 13px 14px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .order-summary-left { font-size: 13px; }
+  .order-summary-left .pkg-name { font-weight: 600; margin-bottom: 2px; }
+  .order-summary-left .pkg-sub { font-size: 11px; color: var(--ink-soft); }
+  .order-summary-price {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ===== METODE PEMBAYARAN ===== */
+  .pay-section-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin-bottom: 9px;
+    display: block;
+  }
+
+  .pay-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .pay-method {
+    border: 1.5px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transition: border-color 0.15s, background 0.15s;
+    background: var(--bg);
+  }
+  .pay-method:hover { border-color: var(--terracotta); }
+  .pay-method.active {
+    border-color: var(--terracotta);
+    background: #FBE4EE;
+  }
+  .pay-method-icon { font-size: 18px; flex-shrink: 0; }
+  .pay-method-name { font-size: 12px; font-weight: 500; }
+
+  /* ===== PANEL INSTRUKSI PEMBAYARAN ===== */
+  .pay-panel { display: none; margin-bottom: 18px; }
+  .pay-panel.visible { display: block; }
+
+  /* Transfer Bank */
+  .bank-info {
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .bank-header {
+    background: var(--line);
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .bank-row {
+    padding: 11px 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+  .bank-row:first-of-type { border-top: none; }
+  .bank-row-label { color: var(--ink-soft); font-size: 12px; }
+  .bank-row-value { font-weight: 600; }
+  .bank-row-value.mono {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+  .copy-btn {
+    font-size: 11px;
+    color: var(--terracotta-dark);
+    background: none;
+    border: 1px solid var(--terracotta-dark);
+    border-radius: 2px;
+    padding: 3px 9px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  .copy-btn:hover { background: #FBE4EE; }
+
+  .pay-note {
+    background: #FBE4EE;
+    border-left: 3px solid var(--terracotta);
+    border-radius: 2px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--terracotta-dark);
+    line-height: 1.6;
+  }
+
+  /* E-Wallet */
+  .ewallet-box {
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 18px 14px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .ewallet-qr {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 12px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Simple QR-like pattern using CSS */
+  .ewallet-qr::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    background-image:
+      repeating-linear-gradient(0deg, var(--line-strong) 0px, var(--line-strong) 1px, transparent 1px, transparent 7px),
+      repeating-linear-gradient(90deg, var(--line-strong) 0px, var(--line-strong) 1px, transparent 1px, transparent 7px);
+    opacity: 0.6;
+  }
+  .ewallet-qr-label {
+    position: relative;
+    z-index: 1;
+    font-size: 10px;
+    color: var(--ink-soft);
+    text-align: center;
+    line-height: 1.4;
+  }
+  .ewallet-number {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .ewallet-name { font-size: 12px; color: var(--ink-soft); }
+
+  /* ===== UPLOAD BUKTI ===== */
+  .upload-bukti-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .upload-bukti {
+    border: 1.5px dashed var(--line-strong);
+    border-radius: 3px;
+    padding: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    margin-bottom: 6px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .upload-bukti:hover { border-color: var(--terracotta); background: #FBE4EE; }
+  .upload-bukti-hint { font-size: 11px; color: var(--ink-soft); opacity: 0.7; text-align: center; }
+
+  /* preview chip */
+  .file-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: 20px;
+    padding: 4px 11px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+
+  /* ===== KONFIRMASI SUKSES ===== */
+  .success-screen { display: none; }
+  .success-screen.visible { display: block; }
+  .main-screen { }
+  .main-screen.hidden { display: none; }
+
+  .success-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--sage);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 22px;
+  }
+  .success-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .success-sub {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .success-detail {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+  .success-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .success-row:last-child { border-bottom: none; }
+  .success-row span:first-child { color: var(--ink-soft); }
+  .success-row span:last-child { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" style="text-decoration:none;"><img src="https://placehold.co/120x32/1a1a1a/ffffff?text=SKETSAINT&font=playfair-display" alt="Sketsaint" style="height:32px;"></a>
+    <div class="navlinks">
+      <a href="index.html#galeri">Galeri</a>
+      <a href="index.html#katalog">Katalog</a>
+      <a href="index.html#alur">Alur</a>
+    </div>
+    <a class="navcta" href="login.html">Keluar</a>
+  </div>
+</nav>
+
+<div class="device-page">
+  <div class="screen-label">Pembayaran</div>
+  <div class="device">
+    <div class="device-bar"><span></span><span></span><span></span></div>
+    <div class="device-body">
+
+      <!-- STEP INDICATOR -->
+      <div class="steps">
+        <div class="step done">
+          <div class="step-circle">✓</div>
+          <span>Detail</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step active">
+          <div class="step-circle">2</div>
+          <span>Pembayaran</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <div class="step-circle">3</div>
+          <span>Konfirmasi</span>
+        </div>
+      </div>
+
+      <!-- MAIN SCREEN -->
+      <div class="main-screen" id="main-screen">
+
+        <!-- RINGKASAN PESANAN -->
+        <div class="order-summary">
+          <div class="order-summary-left">
+            <div class="pkg-name">Full Body Color</div>
+            <div class="pkg-sub">1 karakter · 7–14 hari kerja · PNG + PSD</div>
+          </div>
+          <div class="order-summary-price">Rp600.000</div>
+        </div>
+
+        <!-- PILIH METODE -->
+        <span class="pay-section-label">Pilih metode pembayaran</span>
+        <div class="pay-methods">
+          <div class="pay-method active" onclick="selectMethod(this, 'bank')">
+            <div class="pay-method-icon">🏦</div>
+            <div class="pay-method-name">Transfer Bank</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this, 'gopay')">
+            <div class="pay-method-icon">💚</div>
+            <div class="pay-method-name">GoPay</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this, 'ovo')">
+            <div class="pay-method-icon">🟣</div>
+            <div class="pay-method-name">OVO</div>
+          </div>
+          <div class="pay-method" onclick="selectMethod(this, 'dana')">
+            <div class="pay-method-icon">🔵</div>
+            <div class="pay-method-name">DANA</div>
+          </div>
+        </div>
+
+        <!-- PANEL: TRANSFER BANK -->
+        <div class="pay-panel visible" id="panel-bank">
+          <div class="bank-info">
+            <div class="bank-header">Instruksi Transfer Bank</div>
+            <div class="bank-row">
+              <span class="bank-row-label">Bank</span>
+              <span class="bank-row-value">BCA</span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-row-label">No. Rekening</span>
+              <div style="display:flex;align-items:center;">
+                <span class="bank-row-value mono" id="norek">1234 5678 90</span>
+                <button class="copy-btn" onclick="copyText('1234567890', this)">Salin</button>
+              </div>
+            </div>
+            <div class="bank-row">
+              <span class="bank-row-label">Atas nama</span>
+              <span class="bank-row-value">Kaize Coiviloir</span>
+            </div>
+            <div class="bank-row">
+              <span class="bank-row-label">Jumlah transfer</span>
+              <div style="display:flex;align-items:center;">
+                <span class="bank-row-value" style="color:var(--terracotta-dark);">Rp 600.000</span>
+                <button class="copy-btn" onclick="copyText('600000', this)">Salin</button>
+              </div>
+            </div>
+          </div>
+          <div class="pay-note">
+            Transfer sesuai jumlah di atas agar mudah diverifikasi. Setelah transfer, upload bukti pembayaran di bawah.
+          </div>
+        </div>
+
+        <!-- PANEL: GOPAY -->
+        <div class="pay-panel" id="panel-gopay">
+          <div class="ewallet-box">
+            <div class="ewallet-qr">
+              <div class="ewallet-qr-label">QR<br>GoPay</div>
+            </div>
+            <div class="ewallet-number">0812-3456-7890</div>
+            <div class="ewallet-name">a/n Kaize Coiviloir</div>
+          </div>
+          <div class="pay-note">Scan QR atau kirim ke nomor di atas sejumlah <strong>Rp 600.000</strong>. Simpan bukti pembayaran.</div>
+        </div>
+
+        <!-- PANEL: OVO -->
+        <div class="pay-panel" id="panel-ovo">
+          <div class="ewallet-box">
+            <div class="ewallet-qr">
+              <div class="ewallet-qr-label">QR<br>OVO</div>
+            </div>
+            <div class="ewallet-number">0812-3456-7890</div>
+            <div class="ewallet-name">a/n Kaize Coiviloir</div>
+          </div>
+          <div class="pay-note">Scan QR atau kirim ke nomor di atas sejumlah <strong>Rp 600.000</strong>. Simpan bukti pembayaran.</div>
+        </div>
+
+        <!-- PANEL: DANA -->
+        <div class="pay-panel" id="panel-dana">
+          <div class="ewallet-box">
+            <div class="ewallet-qr">
+              <div class="ewallet-qr-label">QR<br>DANA</div>
+            </div>
+            <div class="ewallet-number">0812-3456-7890</div>
+            <div class="ewallet-name">a/n Kaize Coiviloir</div>
+          </div>
+          <div class="pay-note">Scan QR atau kirim ke nomor di atas sejumlah <strong>Rp 600.000</strong>. Simpan bukti pembayaran.</div>
+        </div>
+
+        <!-- UPLOAD BUKTI -->
+        <div style="margin-top:18px;">
+          <span class="upload-bukti-label">Upload bukti pembayaran</span>
+          <div class="upload-box" id="upload-bukti-box" onclick="document.getElementById('input-bukti').click()">
+            Klik untuk upload bukti transfer
+          </div>
+          <input type="file" id="input-bukti" accept="image/*" style="display:none;" onchange="handleBukti(this)">
+          <div class="upload-bukti-hint">JPG, PNG · maks. 5 MB</div>
+          <div id="bukti-chip" style="display:none;">
+            <div class="file-chip">📎 <span id="bukti-name"></span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <button class="full-btn" onclick="submitPayment()">Konfirmasi Pembayaran</button>
+          <div style="font-size:11px;color:var(--ink-soft);text-align:center;margin-top:6px;">
+            Pesanan dikonfirmasi setelah pembayaran diverifikasi artist
+          </div>
+        </div>
+
+      </div><!-- /main-screen -->
+
+      <!-- SUCCESS SCREEN -->
+      <div class="success-screen" id="success-screen">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Pembayaran terkirim!</div>
+        <p class="success-sub">Bukti pembayaranmu sudah diterima. Artist akan memverifikasi dan mulai mengerjakan pesananmu.</p>
+
+        <div class="success-detail">
+          <div class="success-row">
+            <span>Nomor pesanan</span>
+            <span>#SKT-0048</span>
+          </div>
+          <div class="success-row">
+            <span>Paket</span>
+            <span>Full Body color</span>
+          </div>
+          <div class="success-row">
+            <span>Total dibayar</span>
+            <span>Rp 600.000</span>
+          </div>
+          <div class="success-row">
+            <span>Tanggal pembayaran</span>
+            <span id="tanggal-bayar"></span>
+          </div>
+          <div class="success-row">
+            <span>Estimasi selesai</span>
+            <span>7–14 hari kerja</span>
+          </div>
+          <div class="success-row">
+            <span>Status</span>
+            <span style="color:var(--sage-dark);">Menunggu verifikasi</span>
+          </div>
+        </div>
+
+        <a href="detail3.html" style="text-decoration:none;"><button class="full-btn">Lihat status pesanan</button></a>
+        <a href="index.html" style="text-decoration:none;">
+          <button class="full-btn" style="background:transparent;color:var(--ink);border:1px solid var(--line-strong);margin-top:8px;">
+            Kembali ke beranda
+          </button>
+        </a>
+      </div><!-- /success-screen -->
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. Art by KANAU All rights Reserved.</div>
+</footer>
+
+<script>
+  function selectMethod(el, id) {
+    document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('visible'));
+    document.getElementById('panel-' + id).classList.add('visible');
+  }
+
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Tersalin!';
+      btn.style.background = '#E3F0FC';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1800);
+    });
+  }
+
+  function handleBukti(input) {
+    if (input.files.length > 0) {
+      document.getElementById('bukti-name').textContent = input.files[0].name;
+      document.getElementById('bukti-chip').style.display = 'block';
+      document.getElementById('upload-bukti-box').textContent = '✓ File terpilih — klik untuk ganti';
+      document.getElementById('upload-bukti-box').style.borderColor = 'var(--sage)';
+      document.getElementById('upload-bukti-box').style.color = 'var(--sage-dark)';
+    }
+  }
+
+  function submitPayment() {
+
+    const bukti = document.getElementById("input-bukti");
+
+    if (bukti.files.length === 0) {
+        alert("Silakan upload bukti pembayaran terlebih dahulu.");
+        return;
+    }
+
+    document.getElementById("tanggal-bayar").textContent =
+        new Date().toLocaleDateString("id-ID", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+
+    document.getElementById("main-screen").classList.add("hidden");
+    document.getElementById("success-screen").classList.add("visible");
+
+    const steps = document.querySelectorAll(".step");
+
+    steps[1].classList.remove("active");
+    steps[1].classList.add("done");
+    steps[1].querySelector(".step-circle").textContent = "✓";
+
+    steps[2].classList.add("active");
+    steps[2].querySelector(".step-circle").textContent = "3";
+
+}
+</script>
+</body>
+</html>

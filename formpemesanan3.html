@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form pemesanan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" style="text-decoration:none;"><img src="https://placehold.co/120x32/1a1a1a/ffffff?text=SKETSAINT&font=playfair-display" alt="Sketsaint" style="height:32px;"></a>
+    <div class="navlinks">
+      <a href="index.html#galeri">Galeri</a>
+      <a href="index.html#katalog">Katalog</a>
+      <a href="index.html#alur">Alur</a>
+    </div>
+    <a class="navcta" href="login.html">Keluar</a>
+  </div>
+</nav>
+
+<div class="device-page">
+  <div class="screen-label">Form pemesanan</div>
+  <div class="device">
+    <div class="device-bar"><span></span><span></span><span></span></div>
+    <div class="device-body">
+      <div class="order-pkg">
+        <div class="order-pkg-thumb"><img src="wajah3.avif" alt="paket" style="width:100%;height:100%;object-fit:cover;border-radius:3px;"></div>
+        <div>
+          <h4>Wajah</h4>
+          <p>Fokus ekspresi wajah.</p>
+          <div class="price">Rp200.000</div>
+        </div>
+      </div>
+      <label class="field-label">Deskripsi karakter</label>
+      <textarea class="field-textarea" placeholder="Jelaskan karakter, pose, kostum, dll"></textarea>
+      <label class="field-label">Upload gambar referensi</label>
+      <div class="upload-box id="uploadBox" onclick="document.getElementById('referenceInput').click()">Klik untuk upload referensi</div>
+      <input
+      type="file"
+      id="referenceInput"
+      accept="image/*"
+      style="display:none;"
+      onchange="previewReference(this)">
+      <div id="previewContainer" style="display:none;margin-top:12px;">
+        <img id="previewImage" style="width:100%; border-radius:4px; border:1px solid var(--line)">
+        <div id="fileName" style="font-size:12px; color:var(--ink-soft); margin-top:6px"></div> 
+      </div>
+      <a href="pembayaran.html" style="text-decoration:none;"><button class="full-btn">Lanjut ke pembayaran</button></a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. Art by KANAU All rights Reserved.</div>
+</footer>
+
+<script>
+  function previewReference(input){
+    if(input.files && input.files[0]){
+      const file = input.files[0];
+      document.getElementById("fileName").textContent = file.name;
+      const reader = new FileReader();
+
+      reader.onload = function(e){
+        document.getElementById("previewImage").src = e.target.result;
+        document.getElementById("previewContainer").style.display = "block";
+      }
+      reader.readAsDataURL(file);
+
+        document.getElementById("uploadBox").innerHTML = "✓ Gambar berhasil dipilih (klik untuk ganti)";
+        document.getElementById("uploadBox").style.borderColor = "var(--sage)";
+        document.getElementById("uploadBox").style.color = "var(--sage-dark)";
+    }
+
+  }
+</script>
+
+</body>
+</html>
