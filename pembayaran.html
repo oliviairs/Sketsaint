@@ -519,11 +519,13 @@
 </footer>
 
 <script>
+  let metodeBayarDipilih = 'bank';
   function selectMethod(el, id) {
     document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
     el.classList.add('active');
     document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('visible'));
     document.getElementById('panel-' + id).classList.add('visible');
+    metodeBayarDipilih = id;
   }
 
   function copyText(text, btn) {
@@ -537,11 +539,19 @@
 
   function handleBukti(input) {
     if (input.files.length > 0) {
-      document.getElementById('bukti-name').textContent = input.files[0].name;
+      const file = input.files[0];
+      document.getElementById('bukti-name').textContent = file.name;
       document.getElementById('bukti-chip').style.display = 'block';
       document.getElementById('upload-bukti-box').textContent = '✓ File terpilih — klik untuk ganti';
       document.getElementById('upload-bukti-box').style.borderColor = 'var(--sage)';
       document.getElementById('upload-bukti-box').style.color = 'var(--sage-dark)';
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        localStorage.setItem('buktiBayarGambar', e.target.result);
+        localStorage.setItem('buktiBayarNama', file.name);
+      };
+      reader.readAsDataURL(file);
     }
   }
 
@@ -553,6 +563,10 @@
         alert("Silakan upload bukti pembayaran terlebih dahulu.");
         return;
     }
+
+    localStorage.setItem("metodeBayar", metodeBayarDipilih);
+    localStorage.setItem("statusPembayaran", "Menunggu verifikasi");
+    localStorage.setItem("tanggalBayar", new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }));
 
     document.getElementById("tanggal-bayar").textContent =
         new Date().toLocaleDateString("id-ID", {

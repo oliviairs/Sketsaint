@@ -56,7 +56,7 @@
         <div>
           <div class="order-id">ORDER #002</div>
           <div class="order-title">Wajah</div>
-          <div class="order-meta">Pelanggan: Siska · Rp200.000</div>
+          <div class="order-meta">Pelanggan: <span id="namaPelanggan"></span> · Rp200.000</div>
         </div>
         <span class="badge badge-done">Selesai</span>
       </div>
@@ -80,7 +80,7 @@
       <div class="detail-panel">
         <span class="section-label">Referensi dari pelanggan</span>
         <div class="referensi-box"><img src="refere5.jpg" alt="referensi pelanggan" style="width:100%;height:100%;object-fit:cover;"></div>
-        <p style="font-size:11px;color:var(--ink-soft);margin:4px 0 0;">referensi_siska.jpg</p>
+        <p style="font-size:11px;color:var(--ink-soft);margin:4px 0 0;">1234ref.jpg</p>
       </div>
 
       <div class="detail-panel">
@@ -88,7 +88,7 @@
         <div class="hasil-grid">
           <div class="referensi-box" style="margin-bottom:0;"><img src="hasilll2.jpg" alt="hasil akhir" style="width:100%;height:100%;object-fit:cover;"></div>
         </div>
-        <p style="font-size:11px;color:var(--ink-soft);margin:8px 0 0;">hasil_akhir_siska.jpg · Dikirim ke pelanggan 24 Juni 2026</p>
+        <p style="font-size:11px;color:var(--ink-soft);margin:8px 0 0;">hasil_akhir_002.jpg · Dikirim ke pelanggan 24 Juni 2026</p>
       </div>
 
       <a href="pesanan-selesai.html" style="text-decoration:none;">
@@ -105,5 +105,11 @@
   <div class="wrap">Mockup sistem Digital Art Commission &copy; 2026 Olivia. All rights Reserved.</div>
 </footer>
 
+<script>
+const nama = localStorage.getItem("nama") || "Siska";
+document.getElementById("namaPelanggan").textContent = nama;
+</script>
+
+</body>
 </body>
 </html>
